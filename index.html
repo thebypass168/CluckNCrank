@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cluck N Crank</title>
-  <meta name="description" content="Cluck N Crank — bold chicken, fast flavor, industrial attitude." />
+  <meta
+    name="description"
+    content="Cluck N Crank — bold chicken, fast flavor, industrial attitude."
+  />
   <style>
     :root {
       --bg: #0b0b0d;
-      --panel: rgba(255,255,255,0.08);
-      --panel-border: rgba(255,255,255,0.14);
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-border: rgba(255, 255, 255, 0.14);
       --text: #f7f7f7;
       --muted: #b8b8c2;
       --red: #ff5a36;
@@ -18,21 +21,37 @@
       --glow: 0 0 24px rgba(255, 90, 54, 0.28);
       --radius: 24px;
       --max: 1180px;
+      --success: #6ee7a8;
+      --danger: #ff8e8e;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Inter, Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(255,180,44,0.12), transparent 30%),
-        radial-gradient(circle at top right, rgba(255,90,54,0.12), transparent 28%),
+        radial-gradient(circle at top left, rgba(255, 180, 44, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 90, 54, 0.12), transparent 28%),
         linear-gradient(180deg, #111216 0%, #09090b 100%);
       color: var(--text);
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
     .container {
       width: min(calc(100% - 32px), var(--max));
@@ -42,10 +61,10 @@
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 50;
       backdrop-filter: blur(18px);
-      background: rgba(8, 8, 10, 0.72);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8, 8, 10, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .nav {
@@ -54,6 +73,7 @@
       justify-content: space-between;
       padding: 16px 0;
       gap: 16px;
+      position: relative;
     }
 
     .brand {
@@ -75,6 +95,7 @@
       color: #111;
       box-shadow: var(--glow);
       font-size: 22px;
+      flex-shrink: 0;
     }
 
     .nav-links {
@@ -82,9 +103,54 @@
       gap: 22px;
       color: var(--muted);
       font-size: 0.95rem;
+      align-items: center;
     }
 
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--text);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.15rem;
+    }
+
+    .mobile-menu {
+      display: none;
+      padding: 0 0 16px;
+    }
+
+    .mobile-menu.open {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-menu a {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a:focus {
+      color: var(--text);
+    }
 
     .btn {
       display: inline-flex;
@@ -98,9 +164,12 @@
       transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
       cursor: pointer;
       border: 1px solid transparent;
+      text-align: center;
     }
 
-    .btn:hover { transform: translateY(-1px); }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--red), var(--gold));
@@ -109,8 +178,8 @@
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
       color: var(--text);
     }
 
@@ -129,8 +198,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
       color: var(--gold);
       padding: 8px 14px;
       border-radius: 999px;
@@ -174,17 +243,16 @@
       overflow: hidden;
       border: 1px solid var(--panel-border);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
-        radial-gradient(circle at top, rgba(255,180,44,0.18), transparent 35%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        radial-gradient(circle at top, rgba(255, 180, 44, 0.18), transparent 35%),
         linear-gradient(180deg, #1a1b1f 0%, #111216 100%);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
     }
 
     .hero-card::before,
     .hero-card::after {
       content: "";
       position: absolute;
-      inset: auto;
       border-radius: 50%;
       filter: blur(40px);
       opacity: 0.65;
@@ -219,9 +287,12 @@
     .mock-top,
     .mock-bottom,
     .feature-card,
-    .info-strip {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
+    .info-strip,
+    .signup-box,
+    .glass-card,
+    .contact-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(14px);
       border-radius: 22px;
     }
@@ -238,7 +309,7 @@
       display: inline-flex;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255,180,44,0.12);
+      background: rgba(255, 180, 44, 0.12);
       color: var(--gold);
       font-size: 0.78rem;
       font-weight: 700;
@@ -293,6 +364,7 @@
 
     section {
       padding: 32px 0;
+      scroll-margin-top: 88px;
     }
 
     .section-head {
@@ -320,11 +392,7 @@
 
     .glass-card {
       padding: 24px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
     }
 
     .glass-card h3 {
@@ -355,17 +423,133 @@
       justify-content: space-between;
       gap: 12px;
       padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--muted);
     }
 
-    .hour-row strong { color: var(--text); }
+    .hour-row strong {
+      color: var(--text);
+    }
+
+    .signup-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .signup-box,
+    .contact-card {
+      padding: 24px;
+    }
+
+    .signup-form {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+    }
+
+    .field,
+    .textarea {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      padding: 0 16px;
+      font: inherit;
+      outline: none;
+    }
+
+    .textarea {
+      min-height: 120px;
+      resize: vertical;
+      padding: 14px 16px;
+    }
+
+    .field::placeholder,
+    .textarea::placeholder {
+      color: #a7a7b2;
+    }
+
+    .field:focus,
+    .textarea:focus {
+      border-color: rgba(255, 180, 44, 0.7);
+      box-shadow: 0 0 0 3px rgba(255, 180, 44, 0.1);
+    }
+
+    .form-message {
+      min-height: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .form-message.success {
+      color: var(--success);
+    }
+
+    .form-message.error {
+      color: var(--danger);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .contact-item span,
+    .contact-item a {
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      font-size: 0.94rem;
+    }
+
+    .social-link:hover,
+    .social-link:focus {
+      border-color: rgba(255, 180, 44, 0.5);
+    }
 
     .cta-box {
       padding: 28px;
       border-radius: 32px;
-      background: linear-gradient(135deg, rgba(255,90,54,0.16), rgba(255,180,44,0.12));
-      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(135deg, rgba(255, 90, 54, 0.16), rgba(255, 180, 44, 0.12));
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -392,11 +576,23 @@
       font-size: 0.92rem;
     }
 
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media (max-width: 980px) {
       .hero-grid,
       .cards-3,
       .split,
-      .mock-bottom {
+      .mock-bottom,
+      .signup-grid {
         grid-template-columns: 1fr;
       }
 
@@ -404,8 +600,18 @@
         min-height: auto;
       }
 
-      .nav-links {
+      .nav-links,
+      .nav-right .desktop-cta {
         display: none;
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .input-row {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -416,7 +622,9 @@
 
       .mockup,
       .glass-card,
-      .cta-box {
+      .cta-box,
+      .signup-box,
+      .contact-card {
         padding: 20px;
       }
 
@@ -428,27 +636,50 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#top">
-        <div class="brand-mark">🐔</div>
-        <div>Cluck N Crank</div>
-      </a>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Go to top">
+          <div class="brand-mark">🐔</div>
+          <div>Cluck N Crank</div>
+        </a>
 
-      <nav class="nav-links">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#hours">Hours</a>
+          <a href="#updates">Updates</a>
+          <a href="#visit">Visit</a>
+        </nav>
+
+        <div class="nav-right">
+          <a class="btn btn-primary desktop-cta" href="#updates">Opening Soon</a>
+          <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+            type="button"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
         <a href="#about">About</a>
         <a href="#menu">Menu</a>
         <a href="#hours">Hours</a>
+        <a href="#updates">Updates</a>
         <a href="#visit">Visit</a>
-      </nav>
-
-      <a class="btn btn-primary" href="#visit">Opening Soon</a>
+      </div>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
       <div class="container hero-grid">
-        <div>
+        <div class="reveal">
           <div class="eyebrow">Industrial chicken shack • opening soon</div>
           <h1>Bold chicken.<br />Fast flavor.<br />Built to crave.</h1>
           <p>
@@ -456,7 +687,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#visit">Get opening updates</a>
+            <a class="btn btn-primary" href="#updates">Get opening updates</a>
             <a class="btn btn-secondary" href="#menu">See the vibe</a>
           </div>
 
@@ -465,14 +696,16 @@
           </div>
         </div>
 
-        <div class="hero-card">
+        <div class="hero-card reveal">
           <div class="mockup">
             <div class="mock-top">
               <div>
                 <div class="tag">Cluck N Crank</div>
                 <h3 style="margin: 10px 0 0; font-size: 1.35rem;">Opening Soon</h3>
               </div>
-              <div style="text-align:right; color: var(--muted); font-size: 0.92rem;">Chicken • Cranks • Combos</div>
+              <div style="text-align: right; color: var(--muted); font-size: 0.92rem;">
+                Chicken • Cranks • Combos
+              </div>
             </div>
 
             <div class="menu-preview">
@@ -511,7 +744,7 @@
 
     <section id="about">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <h2>The concept</h2>
           <p>
             Think industrial chicken shack meets roadside attitude. Cluck N Crank is built to feel exciting before a guest even takes the first bite. The goal of this page is simple: establish the brand, build anticipation, and give people one clean place to follow the launch.
@@ -519,15 +752,15 @@
         </div>
 
         <div class="cards-3">
-          <div class="glass-card">
+          <div class="glass-card reveal">
             <h3>Brand-first landing page</h3>
             <p>This version is focused on launch energy: big headline, visual vibe, and clear calls to action.</p>
           </div>
-          <div class="glass-card">
+          <div class="glass-card reveal">
             <h3>Easy to update</h3>
             <p>Everything is in one file, which makes it easy to edit in GitHub without needing a full web app setup.</p>
           </div>
-          <div class="glass-card">
+          <div class="glass-card reveal">
             <h3>Mobile friendly</h3>
             <p>The layout stacks cleanly on phones so it still looks sharp when people tap in from social posts.</p>
           </div>
@@ -537,7 +770,7 @@
 
     <section id="menu">
       <div class="container split">
-        <div class="glass-card">
+        <div class="glass-card reveal">
           <div class="section-head">
             <h2>What this page can include next</h2>
             <p>Once the first version is live, we can expand it without rebuilding everything.</p>
@@ -550,7 +783,7 @@
           </div>
         </div>
 
-        <div class="glass-card" id="hours">
+        <div class="glass-card reveal" id="hours">
           <div class="section-head">
             <h2>Placeholder hours</h2>
             <p>Use these as temporary text until your real schedule is locked in.</p>
@@ -568,23 +801,162 @@
       </div>
     </section>
 
+    <section id="updates">
+      <div class="container signup-grid">
+        <div class="signup-box reveal">
+          <div class="section-head">
+            <h2>Get opening updates</h2>
+            <p>
+              Be first to know when Cluck N Crank goes live, opens the doors, or drops first-look updates.
+            </p>
+          </div>
+
+          <form class="signup-form" id="signupForm" novalidate>
+            <div class="input-row">
+              <input
+                class="field"
+                id="emailInput"
+                name="email"
+                type="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Join the list</button>
+            </div>
+
+            <div class="form-message" id="formMessage" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <div class="contact-card reveal">
+          <div class="section-head" style="margin-bottom: 0;">
+            <h2>Quick contact</h2>
+            <p>Use placeholders for now, then swap in your real details when ready.</p>
+          </div>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>Email</strong>
+              <a href="mailto:hello@cluckncrank.com">hello@cluckncrank.com</a>
+            </div>
+            <div class="contact-item">
+              <strong>Phone</strong>
+              <a href="tel:+17570000000">(757) 000-0000</a>
+            </div>
+            <div class="contact-item">
+              <strong>Location</strong>
+              <span>Chesapeake, Virginia</span>
+            </div>
+          </div>
+
+          <div class="socials">
+            <a class="social-link" href="#" aria-label="Instagram">Instagram</a>
+            <a class="social-link" href="#" aria-label="Facebook">Facebook</a>
+            <a class="social-link" href="#" aria-label="TikTok">TikTok</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="visit">
       <div class="container">
-        <div class="cta-box">
+        <div class="cta-box reveal">
           <div>
             <h2>Ready to launch Cluck N Crank online?</h2>
             <p>
-              This landing page is ready to be your first live version. Next, we connect the GitHub repository to GitHub Pages, point your Bluehost domain to it, and make the site public.
+              This landing page is ready to be your first live version. Next, connect the GitHub repository to GitHub Pages, point your Bluehost domain to it, and make the site public.
             </p>
           </div>
-          <a class="btn btn-primary" href="mailto:hello@cluckncrank.com">Use your email here</a>
+          <a class="btn btn-primary" href="mailto:hello@cluckncrank.com?subject=Cluck%20N%20Crank%20Inquiry">
+            Contact Us
+          </a>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">© 2026 Cluck N Crank. All rights reserved.</div>
+    <div class="container">© <span id="year"></span> Cluck N Crank. All rights reserved.</div>
   </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const signupForm = document.getElementById("signupForm");
+    const emailInput = document.getElementById("emailInput");
+    const formMessage = document.getElementById("formMessage");
+
+    signupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      formMessage.className = "form-message";
+
+      if (!email) {
+        formMessage.textContent = "Please enter your email address.";
+        formMessage.classList.add("error");
+        return;
+      }
+
+      if (!validEmail.test(email)) {
+        formMessage.textContent = "Please enter a valid email address.";
+        formMessage.classList.add("error");
+        return;
+      }
+
+      try {
+        const existing = JSON.parse(localStorage.getItem("cluckncrank-signups") || "[]");
+
+        if (!existing.includes(email.toLowerCase())) {
+          existing.push(email.toLowerCase());
+          localStorage.setItem("cluckncrank-signups", JSON.stringify(existing));
+        }
+
+        formMessage.textContent = "You’re on the list. We’ll keep you posted.";
+        formMessage.classList.add("success");
+        signupForm.reset();
+      } catch (error) {
+        formMessage.textContent = "Thanks — your interest is noted, but local saving is unavailable on this device.";
+        formMessage.classList.add("success");
+      }
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    reveals.forEach((item) => revealObserver.observe(item));
+  </script>
 </body>
 </html>
