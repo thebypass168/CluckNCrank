@@ -2,27 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>Cluck N Crank</title>
   <meta
     name="description"
-    content="Cluck N Crank — bold chicken, fast flavor, industrial attitude."
+    content="Cluck N Crank — bold chicken, industrial attitude, high-heat flavor."
   />
   <style>
     :root {
-      --bg: #0b0b0d;
+      --bg: #08090b;
+      --bg-2: #101114;
       --panel: rgba(255, 255, 255, 0.08);
-      --panel-border: rgba(255, 255, 255, 0.14);
+      --panel-strong: rgba(255, 255, 255, 0.12);
+      --panel-border: rgba(255, 255, 255, 0.18);
       --text: #f7f7f7;
-      --muted: #b8b8c2;
-      --red: #ff5a36;
-      --gold: #ffb42c;
-      --steel: #8da2b8;
-      --glow: 0 0 24px rgba(255, 90, 54, 0.28);
-      --radius: 24px;
-      --max: 1180px;
-      --success: #6ee7a8;
-      --danger: #ff8e8e;
+      --muted: #c4c7cf;
+      --orange: #ff6b1a;
+      --orange-2: #ff9a1f;
+      --red: #ff3d2e;
+      --gold: #ffc84d;
+      --steel: #aab5c2;
+      --steel-dark: #4f5a66;
+      --glass-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+      --fire-shadow: 0 0 20px rgba(255, 107, 26, 0.35), 0 0 40px rgba(255, 61, 46, 0.18);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1240px;
+      --transition: 220ms ease;
     }
 
     * {
@@ -35,12 +45,59 @@
 
     body {
       margin: 0;
+      color: var(--text);
       font-family: Inter, Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(255, 180, 44, 0.12), transparent 30%),
-        radial-gradient(circle at top right, rgba(255, 90, 54, 0.12), transparent 28%),
-        linear-gradient(180deg, #111216 0%, #09090b 100%);
-      color: var(--text);
+        radial-gradient(circle at 15% 15%, rgba(255, 200, 77, 0.10), transparent 0 20%),
+        radial-gradient(circle at 85% 10%, rgba(255, 61, 46, 0.14), transparent 0 22%),
+        radial-gradient(circle at 50% 100%, rgba(255, 107, 26, 0.10), transparent 0 24%),
+        linear-gradient(180deg, #15171b 0%, #09090b 45%, #050506 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.05) 25%, transparent 25%) -14px 0/28px 28px,
+        linear-gradient(225deg, rgba(255,255,255,0.05) 25%, transparent 25%) -14px 0/28px 28px,
+        linear-gradient(315deg, rgba(255,255,255,0.04) 25%, transparent 25%) 0 0/28px 28px,
+        linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%) 0 0/28px 28px;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto 0 -160px 0;
+      height: 360px;
+      background:
+        radial-gradient(circle at 10% 100%, rgba(255, 107, 26, 0.22), transparent 35%),
+        radial-gradient(circle at 30% 100%, rgba(255, 61, 46, 0.18), transparent 32%),
+        radial-gradient(circle at 50% 100%, rgba(255, 154, 31, 0.20), transparent 38%),
+        radial-gradient(circle at 75% 100%, rgba(255, 107, 26, 0.18), transparent 34%),
+        radial-gradient(circle at 90% 100%, rgba(255, 61, 46, 0.16), transparent 28%);
+      filter: blur(28px);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 0;
+      animation: firePulse 4.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes firePulse {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.72;
+      }
+      to {
+        transform: translateY(-12px) scale(1.03);
+        opacity: 0.95;
+      }
     }
 
     a {
@@ -54,102 +111,156 @@
     }
 
     .container {
-      width: min(calc(100% - 32px), var(--max));
+      width: min(calc(100% - 28px), var(--max));
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .diamond-plate {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, #1a1d21 0%, #111317 100%);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -1px 0 rgba(0,0,0,0.45),
+        0 16px 40px rgba(0,0,0,0.35);
+    }
+
+    .diamond-plate::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.09) 25%, transparent 25%) -18px 0/36px 36px,
+        linear-gradient(225deg, rgba(255,255,255,0.09) 25%, transparent 25%) -18px 0/36px 36px,
+        linear-gradient(315deg, rgba(255,255,255,0.06) 25%, transparent 25%) 0 0/36px 36px,
+        linear-gradient(45deg, rgba(255,255,255,0.06) 25%, transparent 25%) 0 0/36px 36px;
+      opacity: 0.24;
+      pointer-events: none;
+    }
+
+    .glass {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.07) 100%
+      );
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--panel-border);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.16),
+        var(--glass-shadow);
+    }
+
+    .glow-line {
+      position: relative;
+    }
+
+    .glow-line::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: -1px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--gold), transparent);
+      box-shadow: var(--fire-shadow);
+      opacity: 0.92;
     }
 
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
+      padding: 12px 0;
       backdrop-filter: blur(18px);
-      background: rgba(8, 8, 10, 0.78);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(7, 8, 10, 0.64);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    .nav {
+    .nav-shell {
+      border-radius: 999px;
+      padding: 10px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
-      gap: 16px;
-      position: relative;
+      gap: 18px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 14px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      min-width: 0;
     }
 
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+    .brand-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--red), var(--gold));
-      color: #111;
-      box-shadow: var(--glow);
-      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: white;
+      background:
+        radial-gradient(circle at 30% 25%, #ffd56f 0%, #ff9a1f 28%, #ff5d1f 60%, #8b1b08 100%);
+      box-shadow:
+        inset 0 2px 10px rgba(255,255,255,0.25),
+        0 0 18px rgba(255,107,26,0.5),
+        0 16px 24px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.16);
       flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
-      gap: 22px;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
       color: var(--muted);
+      transition: var(--transition);
       font-size: 0.95rem;
-      align-items: center;
+      border: 1px solid transparent;
     }
 
-    .nav-links a:hover,
-    .nav-links a:focus {
-      color: var(--text);
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .menu-toggle {
-      display: none;
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 1.15rem;
-    }
-
-    .mobile-menu {
-      display: none;
-      padding: 0 0 16px;
-    }
-
-    .mobile-menu.open {
-      display: grid;
-      gap: 10px;
-    }
-
-    .mobile-menu a {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-    }
-
-    .mobile-menu a:hover,
-    .mobile-menu a:focus {
-      color: var(--text);
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.08);
     }
 
     .btn {
@@ -157,479 +268,714 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-weight: 700;
-      transition: transform 0.18s ease, opacity 0.18s ease, border-color 0.18s ease;
+      border: 0;
       cursor: pointer;
-      border: 1px solid transparent;
-      text-align: center;
+      font: inherit;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--red), var(--gold));
-      color: #111;
-      box-shadow: var(--glow);
+      padding: 15px 22px;
+      border-radius: 999px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, var(--orange-2), var(--orange), var(--red));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.22),
+        0 12px 24px rgba(255, 92, 30, 0.28),
+        0 0 26px rgba(255, 92, 30, 0.18);
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.12);
-      color: var(--text);
+      padding: 15px 22px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+      font-weight: 700;
     }
 
     .hero {
-      padding: 72px 0 36px;
+      padding: 34px 0 26px;
+    }
+
+    .hero-shell {
+      position: relative;
+      border-radius: 34px;
+      padding: 26px;
+      overflow: hidden;
+    }
+
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -18% -10%;
+      height: 46%;
+      background:
+        radial-gradient(circle at 8% 100%, rgba(255, 107, 26, 0.30), transparent 28%),
+        radial-gradient(circle at 26% 100%, rgba(255, 61, 46, 0.24), transparent 24%),
+        radial-gradient(circle at 52% 100%, rgba(255, 154, 31, 0.28), transparent 30%),
+        radial-gradient(circle at 73% 100%, rgba(255, 107, 26, 0.24), transparent 26%),
+        radial-gradient(circle at 94% 100%, rgba(255, 61, 46, 0.20), transparent 22%);
+      filter: blur(22px);
+      pointer-events: none;
+      animation: firePulse 5s ease-in-out infinite alternate;
     }
 
     .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
-      align-items: center;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      padding: 34px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--gold);
-      padding: 8px 14px;
+      gap: 10px;
+      padding: 10px 14px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      margin-bottom: 18px;
+      color: #ffe5bf;
+      background: rgba(255, 116, 43, 0.12);
+      border: 1px solid rgba(255, 167, 77, 0.18);
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
+      box-shadow: var(--fire-shadow);
     }
 
-    h1 {
-      margin: 18px 0 16px;
-      font-size: clamp(2.6rem, 6vw, 5.4rem);
-      line-height: 0.95;
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.7rem, 6vw, 5.8rem);
+      line-height: 0.94;
       letter-spacing: -0.04em;
+      max-width: 9ch;
+      text-transform: uppercase;
+      text-wrap: balance;
+      text-shadow:
+        0 0 18px rgba(255, 107, 26, 0.16),
+        0 14px 24px rgba(0, 0, 0, 0.34);
+    }
+
+    .hero h1 .hot {
+      background: linear-gradient(180deg, #fff7eb 0%, #ffc76b 44%, #ff7d29 78%, #ff442e 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 14px rgba(255,107,26,0.16));
     }
 
     .hero p {
-      font-size: 1.08rem;
-      line-height: 1.7;
+      margin: 18px 0 0;
+      max-width: 60ch;
       color: var(--muted);
-      max-width: 640px;
-      margin: 0 0 28px;
+      font-size: 1.06rem;
+      line-height: 1.72;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-bottom: 24px;
+      margin-top: 26px;
     }
 
-    .hero-note {
-      color: #d7d7de;
-      font-size: 0.95rem;
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
     }
 
-    .hero-card {
-      position: relative;
-      min-height: 520px;
-      border-radius: 32px;
-      overflow: hidden;
-      border: 1px solid var(--panel-border);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-        radial-gradient(circle at top, rgba(255, 180, 44, 0.18), transparent 35%),
-        linear-gradient(180deg, #1a1b1f 0%, #111216 100%);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    .hero-point {
+      padding: 16px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(40px);
-      opacity: 0.65;
+    .hero-point strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
     }
 
-    .hero-card::before {
-      width: 180px;
-      height: 180px;
-      right: -30px;
-      top: -30px;
-      background: rgba(255, 90, 54, 0.25);
+    .hero-point span {
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
-    .hero-card::after {
-      width: 220px;
-      height: 220px;
-      left: -60px;
-      bottom: -60px;
-      background: rgba(255, 180, 44, 0.18);
+    .hero-visual {
+      min-height: 560px;
+      display: grid;
+      align-items: stretch;
+      padding: 20px;
     }
 
-    .mockup {
+    .visual-stack {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
       position: relative;
       z-index: 1;
-      height: 100%;
+    }
+
+    .top-pill {
+      justify-self: end;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: #ffe8bf;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      background: rgba(255, 112, 44, 0.14);
+      border: 1px solid rgba(255, 173, 91, 0.2);
+      box-shadow: var(--fire-shadow);
+    }
+
+    .machine-card {
+      position: relative;
+      border-radius: 28px;
       padding: 24px;
+      min-height: 100%;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .mock-top,
-    .mock-bottom,
-    .feature-card,
-    .info-strip,
-    .signup-box,
-    .glass-card,
-    .contact-card {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(14px);
-      border-radius: 22px;
+    .machine-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 25%, rgba(255,255,255,0.24), transparent 22%),
+        radial-gradient(circle at 78% 20%, rgba(255,255,255,0.12), transparent 18%),
+        radial-gradient(circle at 50% 88%, rgba(255, 107, 26, 0.26), transparent 32%);
+      pointer-events: none;
     }
 
-    .mock-top {
-      padding: 18px;
+    .machine-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      align-items: flex-start;
+      gap: 14px;
     }
 
-    .tag {
-      display: inline-flex;
+    .serial {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .status-light {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 180, 44, 0.12);
-      color: var(--gold);
-      font-size: 0.78rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #ffd9a6;
+      font-size: 0.8rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
     }
 
-    .menu-preview {
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #fff4c4 0%, #ffb62d 45%, #ff502d 100%);
+      box-shadow:
+        0 0 10px rgba(255, 138, 30, 0.7),
+        0 0 24px rgba(255, 72, 46, 0.35);
+      animation: blink 1.8s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.72; transform: scale(0.9); }
+    }
+
+    .badge-grid {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .badge-box {
+      border-radius: 20px;
+      padding: 18px;
+      min-height: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-box strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .badge-box span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.92rem;
+    }
+
+    .plate-tag {
+      align-self: start;
+      margin-top: 18px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 18px rgba(255,107,26,0.18);
+    }
+
+    .section {
+      padding: 26px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
       gap: 16px;
-      margin: 18px 0;
+      margin-bottom: 20px;
+    }
+
+    .section-kicker {
+      color: #ffd49a;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(2rem, 3.5vw, 3.4rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .section-sub {
+      margin: 10px 0 0;
+      max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .feature-card {
-      padding: 18px;
+      border-radius: 24px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% -25% -10%;
+      height: 140px;
+      background:
+        radial-gradient(circle at 10% 100%, rgba(255, 107, 26, 0.22), transparent 34%),
+        radial-gradient(circle at 70% 100%, rgba(255, 61, 46, 0.18), transparent 34%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .feature-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      font-weight: 900;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255, 194, 77, 0.95), rgba(255, 107, 26, 0.95), rgba(255, 61, 46, 0.95));
+      box-shadow: var(--fire-shadow);
     }
 
     .feature-card h3 {
       margin: 0 0 8px;
-      font-size: 1.02rem;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .feature-card p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.55;
+      line-height: 1.68;
     }
 
-    .mock-bottom {
-      padding: 18px;
+    .menu-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .info-strip {
-      padding: 16px;
-      text-align: center;
-    }
-
-    .info-strip strong {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-
-    .info-strip span {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    section {
-      padding: 32px 0;
-      scroll-margin-top: 88px;
-    }
-
-    .section-head {
-      margin-bottom: 18px;
-      max-width: 760px;
-    }
-
-    .section-head h2 {
-      margin: 0 0 12px;
-      font-size: clamp(1.8rem, 3vw, 3rem);
-      letter-spacing: -0.03em;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .cards-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 18px;
     }
 
-    .glass-card {
-      padding: 24px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    .menu-panel,
+    .about-panel,
+    .cta-shell,
+    .footer-shell {
+      border-radius: 28px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .glass-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.12rem;
-    }
-
-    .glass-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .hours-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .hour-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--muted);
-    }
-
-    .hour-row strong {
-      color: var(--text);
-    }
-
-    .signup-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .signup-box,
-    .contact-card {
-      padding: 24px;
-    }
-
-    .signup-form {
+    .menu-list {
       display: grid;
       gap: 14px;
       margin-top: 18px;
     }
 
-    .input-row {
+    .menu-item {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
     }
 
-    .field,
-    .textarea {
-      width: 100%;
-      min-height: 52px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text);
-      padding: 0 16px;
-      font: inherit;
-      outline: none;
-    }
-
-    .textarea {
-      min-height: 120px;
-      resize: vertical;
-      padding: 14px 16px;
-    }
-
-    .field::placeholder,
-    .textarea::placeholder {
-      color: #a7a7b2;
-    }
-
-    .field:focus,
-    .textarea:focus {
-      border-color: rgba(255, 180, 44, 0.7);
-      box-shadow: 0 0 0 3px rgba(255, 180, 44, 0.1);
-    }
-
-    .form-message {
-      min-height: 24px;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .form-message.success {
-      color: var(--success);
-    }
-
-    .form-message.error {
-      color: var(--danger);
-    }
-
-    .contact-list {
+    .menu-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       display: grid;
-      gap: 12px;
-      margin-top: 18px;
+      place-items: center;
+      font-size: 1.15rem;
+      background:
+        linear-gradient(145deg, rgba(255, 200, 77, 0.18), rgba(255, 107, 26, 0.14));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--fire-shadow);
     }
 
-    .contact-item {
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .contact-item strong {
+    .menu-copy strong {
       display: block;
-      margin-bottom: 4px;
-      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
-    .contact-item span,
-    .contact-item a {
+    .menu-copy span {
+      display: block;
       color: var(--muted);
-      word-break: break-word;
-    }
-
-    .socials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .social-link {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text);
+      line-height: 1.58;
       font-size: 0.94rem;
     }
 
-    .social-link:hover,
-    .social-link:focus {
-      border-color: rgba(255, 180, 44, 0.5);
+    .menu-price {
+      font-weight: 900;
+      color: #ffe0ac;
+      letter-spacing: 0.03em;
+      font-size: 1.05rem;
     }
 
-    .cta-box {
-      padding: 28px;
-      border-radius: 32px;
-      background: linear-gradient(135deg, rgba(255, 90, 54, 0.16), rgba(255, 180, 44, 0.12));
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1;
+      margin-bottom: 8px;
+      color: #fff3db;
+      text-shadow: 0 0 18px rgba(255, 107, 26, 0.14);
+    }
+
+    .stat-box span {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.92rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+      line-height: 1.76;
+    }
+
+    .about-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .about-pill {
+      padding: 16px 18px;
+      border-radius: 999px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f6f6f7;
+      font-weight: 700;
+    }
+
+    .about-pill .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, #ffe8b2 0%, #ffb034 42%, #ff4c2f 100%);
+      box-shadow: 0 0 14px rgba(255,107,26,0.55);
+      flex-shrink: 0;
+    }
+
+    .cta-shell {
+      padding: 30px;
+    }
+
+    .cta-shell::before {
+      content: "";
+      position: absolute;
+      inset: auto -8% -30% -8%;
+      height: 180px;
+      background:
+        radial-gradient(circle at 15% 100%, rgba(255, 107, 26, 0.26), transparent 32%),
+        radial-gradient(circle at 55% 100%, rgba(255, 200, 77, 0.20), transparent 30%),
+        radial-gradient(circle at 88% 100%, rgba(255, 61, 46, 0.22), transparent 26%);
+      filter: blur(24px);
+      pointer-events: none;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-shell h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .cta-shell p {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 26px 0 40px;
+    }
+
+    .footer-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 18px;
       flex-wrap: wrap;
     }
 
-    .cta-box h2 {
-      margin: 0 0 8px;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-    }
-
-    .cta-box p {
-      margin: 0;
-      color: #e0d7d3;
-      max-width: 720px;
-      line-height: 1.65;
-    }
-
-    footer {
-      padding: 28px 0 60px;
+    .footer-copy {
       color: var(--muted);
-      text-align: center;
-      font-size: 0.92rem;
+      line-height: 1.6;
+      max-width: 52ch;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      color: #fff;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--fire-shadow);
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(24px);
+      transition: opacity 700ms ease, transform 700ms ease;
     }
 
-    .reveal.visible {
+    .reveal.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1080px) {
       .hero-grid,
-      .cards-3,
-      .split,
-      .mock-bottom,
-      .signup-grid {
+      .menu-grid,
+      .about-grid,
+      .cta-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-card {
-        min-height: auto;
+      .hero-visual {
+        min-height: 480px;
       }
 
-      .nav-links,
-      .nav-right .desktop-cta {
-        display: none;
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .menu-toggle {
-        display: inline-grid;
-        place-items: center;
-      }
-
-      .input-row {
-        grid-template-columns: 1fr;
+      .hero h1 {
+        max-width: 100%;
       }
     }
 
-    @media (max-width: 640px) {
-      .hero {
-        padding-top: 44px;
+    @media (max-width: 760px) {
+      .nav-shell {
+        border-radius: 24px;
+        padding: 14px;
+        flex-direction: column;
+        align-items: stretch;
       }
 
-      .mockup,
-      .glass-card,
-      .cta-box,
-      .signup-box,
-      .contact-card {
+      .brand {
+        justify-content: center;
+      }
+
+      .brand-text strong,
+      .brand-text span {
+        white-space: normal;
+        text-align: center;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .hero-shell {
+        padding: 16px;
+      }
+
+      .hero-copy,
+      .menu-panel,
+      .about-panel,
+      .cta-shell,
+      .footer-shell,
+      .hero-visual {
         padding: 20px;
+        border-radius: 24px;
       }
 
-      h1 {
-        line-height: 1;
+      .hero-copy {
+        padding: 24px 20px;
+      }
+
+      .hero-points,
+      .stats-grid,
+      .badge-grid,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .machine-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .footer-shell {
+        align-items: flex-start;
+      }
+
+      .menu-item {
+        grid-template-columns: auto 1fr;
+      }
+
+      .menu-price {
+        grid-column: 2;
+      }
+
+      .cta-grid {
+        gap: 20px;
+      }
+
+      .cta-grid .btn {
+        width: 100%;
       }
     }
   </style>
@@ -637,104 +983,115 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <div class="nav">
-        <a class="brand" href="#top" aria-label="Go to top">
-          <div class="brand-mark">🐔</div>
-          <div>Cluck N Crank</div>
+      <div class="nav-shell glass glow-line">
+        <a class="brand" href="#top">
+          <div class="brand-badge">CNC</div>
+          <div class="brand-text">
+            <strong>Cluck N Crank</strong>
+            <span>Bold Chicken • Industrial Heat</span>
+          </div>
         </a>
 
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a href="#about">About</a>
+        <nav class="nav-links">
+          <a href="#flavor">Flavor</a>
           <a href="#menu">Menu</a>
-          <a href="#hours">Hours</a>
-          <a href="#updates">Updates</a>
-          <a href="#visit">Visit</a>
+          <a href="#about">Vibe</a>
+          <a href="#contact">Launch</a>
         </nav>
-
-        <div class="nav-right">
-          <a class="btn btn-primary desktop-cta" href="#updates">Opening Soon</a>
-          <button
-            class="menu-toggle"
-            id="menuToggle"
-            aria-label="Open menu"
-            aria-expanded="false"
-            aria-controls="mobileMenu"
-            type="button"
-          >
-            ☰
-          </button>
-        </div>
-      </div>
-
-      <div class="mobile-menu" id="mobileMenu">
-        <a href="#about">About</a>
-        <a href="#menu">Menu</a>
-        <a href="#hours">Hours</a>
-        <a href="#updates">Updates</a>
-        <a href="#visit">Visit</a>
       </div>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="reveal">
-          <div class="eyebrow">Industrial chicken shack • opening soon</div>
-          <h1>Bold chicken.<br />Fast flavor.<br />Built to crave.</h1>
-          <p>
-            Cluck N Crank is bringing crispy attitude, sauced-up flavor, and roadside energy together in one fast, unforgettable stop. This is the first look at the brand — loud, modern, and ready to make some noise.
-          </p>
+      <div class="container">
+        <div class="hero-shell diamond-plate reveal">
+          <div class="hero-grid">
+            <div class="hero-copy glass">
+              <div class="eyebrow">High Heat. Hard Crunch. Full Send.</div>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#updates">Get opening updates</a>
-            <a class="btn btn-secondary" href="#menu">See the vibe</a>
-          </div>
+              <h1>
+                INDUSTRIAL
+                <span class="hot">CHICKEN</span>
+                ENERGY
+              </h1>
 
-          <div class="hero-note">
-            Powered by flavor, speed, and a little bit of chaos.
-          </div>
-        </div>
+              <p>
+                Cluck N Crank is built for a loud entrance — crispy chicken,
+                flame-charged attitude, diamond plate texture, glossy glass
+                panels, and a heavy-duty look that still feels premium and clean.
+                This landing page is styled to feel bold, hot, and brand-ready.
+              </p>
 
-        <div class="hero-card reveal">
-          <div class="mockup">
-            <div class="mock-top">
-              <div>
-                <div class="tag">Cluck N Crank</div>
-                <h3 style="margin: 10px 0 0; font-size: 1.35rem;">Opening Soon</h3>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#contact">Get Launch Updates</a>
+                <a class="btn btn-secondary" href="#menu">See the Style</a>
               </div>
-              <div style="text-align: right; color: var(--muted); font-size: 0.92rem;">
-                Chicken • Cranks • Combos
+
+              <div class="hero-points">
+                <div class="hero-point">
+                  <strong>Maximalist</strong>
+                  <span>Layered metal, fire glow, rich contrast.</span>
+                </div>
+                <div class="hero-point">
+                  <strong>Clean Glass</strong>
+                  <span>Slick panels keep the chaos polished.</span>
+                </div>
+                <div class="hero-point">
+                  <strong>Brand Ready</strong>
+                  <span>Built to swap in logos, photos, and menu items.</span>
+                </div>
               </div>
             </div>
 
-            <div class="menu-preview">
-              <div class="feature-card">
-                <h3>Signature Tenders</h3>
-                <p>Golden-crisp chicken with bold seasoning, craveable sauces, and combo-ready sides.</p>
-              </div>
-              <div class="feature-card">
-                <h3>Loaded Crank Fries</h3>
-                <p>Hot fries made to carry flavor — seasoned, sauced, and built for repeat visits.</p>
-              </div>
-              <div class="feature-card">
-                <h3>Fast, loud, memorable</h3>
-                <p>An industrial roadside identity with a punchy look that feels made for social sharing.</p>
-              </div>
-            </div>
+            <div class="hero-visual glass">
+              <div class="visual-stack">
+                <div class="top-pill">Forged for Flavor</div>
 
-            <div class="mock-bottom">
-              <div class="info-strip">
-                <strong>Fresh energy</strong>
-                <span>Modern visual identity</span>
-              </div>
-              <div class="info-strip">
-                <strong>Quick service</strong>
-                <span>Built for traffic flow</span>
-              </div>
-              <div class="info-strip">
-                <strong>Big flavor</strong>
-                <span>Crispy, saucy, bold</span>
+                <div class="machine-card diamond-plate">
+                  <div class="machine-top">
+                    <div>
+                      <div class="serial">CNC // Heat System Online</div>
+                    </div>
+                    <div class="status-light">
+                      <span class="status-dot"></span>
+                      Flame Active
+                    </div>
+                  </div>
+
+                  <div class="badge-grid">
+                    <div class="badge-box glass">
+                      <strong>Diamond Plate Texture</strong>
+                      <span>
+                        Industrial surfaces and metallic layering give the site
+                        a heavy-duty machine-built feel.
+                      </span>
+                    </div>
+                    <div class="badge-box glass">
+                      <strong>Fire Glow Lighting</strong>
+                      <span>
+                        Orange, gold, and red glows create a hot, energized
+                        visual field without turning messy.
+                      </span>
+                    </div>
+                    <div class="badge-box glass">
+                      <strong>Glassmorphism Finish</strong>
+                      <span>
+                        Frosted panels smooth out the maximalism so the brand
+                        still feels elevated and sharp.
+                      </span>
+                    </div>
+                    <div class="badge-box glass">
+                      <strong>Launch-Ready Layout</strong>
+                      <span>
+                        Hero, flavor section, menu teaser, about block, and CTA
+                        are all ready to customize.
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="plate-tag">Built for CluckNCrank.com</div>
+                </div>
               </div>
             </div>
           </div>
@@ -742,221 +1099,229 @@
       </div>
     </section>
 
-    <section id="about">
+    <section class="section" id="flavor">
       <div class="container">
         <div class="section-head reveal">
-          <h2>The concept</h2>
-          <p>
-            Think industrial chicken shack meets roadside attitude. Cluck N Crank is built to feel exciting before a guest even takes the first bite. The goal of this page is simple: establish the brand, build anticipation, and give people one clean place to follow the launch.
-          </p>
-        </div>
-
-        <div class="cards-3">
-          <div class="glass-card reveal">
-            <h3>Brand-first landing page</h3>
-            <p>This version is focused on launch energy: big headline, visual vibe, and clear calls to action.</p>
-          </div>
-          <div class="glass-card reveal">
-            <h3>Easy to update</h3>
-            <p>Everything is in one file, which makes it easy to edit in GitHub without needing a full web app setup.</p>
-          </div>
-          <div class="glass-card reveal">
-            <h3>Mobile friendly</h3>
-            <p>The layout stacks cleanly on phones so it still looks sharp when people tap in from social posts.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="menu">
-      <div class="container split">
-        <div class="glass-card reveal">
-          <div class="section-head">
-            <h2>What this page can include next</h2>
-            <p>Once the first version is live, we can expand it without rebuilding everything.</p>
-          </div>
-          <div class="hours-list">
-            <div class="hour-row"><strong>Section 1</strong><span>Menu teaser with hero item photos</span></div>
-            <div class="hour-row"><strong>Section 2</strong><span>Email signup for opening alerts</span></div>
-            <div class="hour-row"><strong>Section 3</strong><span>Location map and directions</span></div>
-            <div class="hour-row"><strong>Section 4</strong><span>Hiring banner or franchise/contact info</span></div>
-          </div>
-        </div>
-
-        <div class="glass-card reveal" id="hours">
-          <div class="section-head">
-            <h2>Placeholder hours</h2>
-            <p>Use these as temporary text until your real schedule is locked in.</p>
-          </div>
-          <div class="hours-list">
-            <div class="hour-row"><strong>Monday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Tuesday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Wednesday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Thursday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Friday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Saturday</strong><span>Coming Soon</span></div>
-            <div class="hour-row"><strong>Sunday</strong><span>Coming Soon</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="updates">
-      <div class="container signup-grid">
-        <div class="signup-box reveal">
-          <div class="section-head">
-            <h2>Get opening updates</h2>
-            <p>
-              Be first to know when Cluck N Crank goes live, opens the doors, or drops first-look updates.
-            </p>
-          </div>
-
-          <form class="signup-form" id="signupForm" novalidate>
-            <div class="input-row">
-              <input
-                class="field"
-                id="emailInput"
-                name="email"
-                type="email"
-                placeholder="Enter your email address"
-                autocomplete="email"
-                required
-              />
-              <button class="btn btn-primary" type="submit">Join the list</button>
-            </div>
-
-            <div class="form-message" id="formMessage" aria-live="polite"></div>
-          </form>
-        </div>
-
-        <div class="contact-card reveal">
-          <div class="section-head" style="margin-bottom: 0;">
-            <h2>Quick contact</h2>
-            <p>Use placeholders for now, then swap in your real details when ready.</p>
-          </div>
-
-          <div class="contact-list">
-            <div class="contact-item">
-              <strong>Email</strong>
-              <a href="mailto:hello@cluckncrank.com">hello@cluckncrank.com</a>
-            </div>
-            <div class="contact-item">
-              <strong>Phone</strong>
-              <a href="tel:+17570000000">(757) 000-0000</a>
-            </div>
-            <div class="contact-item">
-              <strong>Location</strong>
-              <span>Chesapeake, Virginia</span>
-            </div>
-          </div>
-
-          <div class="socials">
-            <a class="social-link" href="#" aria-label="Instagram">Instagram</a>
-            <a class="social-link" href="#" aria-label="Facebook">Facebook</a>
-            <a class="social-link" href="#" aria-label="TikTok">TikTok</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="visit">
-      <div class="container">
-        <div class="cta-box reveal">
           <div>
-            <h2>Ready to launch Cluck N Crank online?</h2>
-            <p>
-              This landing page is ready to be your first live version. Next, connect the GitHub repository to GitHub Pages, point your Bluehost domain to it, and make the site public.
+            <div class="section-kicker">Visual DNA</div>
+            <h2 class="section-title">Maximal Heat, Controlled Finish</h2>
+            <p class="section-sub">
+              The goal is not “simple.” The goal is intense, memorable, and
+              premium — like a custom machine shop collided with a fire-lit
+              luxury lounge.
             </p>
           </div>
-          <a class="btn btn-primary" href="mailto:hello@cluckncrank.com?subject=Cluck%20N%20Crank%20Inquiry">
-            Contact Us
-          </a>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card glass reveal">
+            <div class="feature-number">01</div>
+            <h3>Metal Everywhere</h3>
+            <p>
+              Diamond plate textures, brushed steel accents, and layered dark
+              surfaces build the industrial backbone of the brand.
+            </p>
+          </article>
+
+          <article class="feature-card glass reveal">
+            <div class="feature-number">02</div>
+            <h3>Flame-Driven Glow</h3>
+            <p>
+              Hot gradients and deep orange/red bloom effects make the page feel
+              alive, like heat is rising from underneath the interface.
+            </p>
+          </article>
+
+          <article class="feature-card glass reveal">
+            <div class="feature-number">03</div>
+            <h3>Clean Glass Balance</h3>
+            <p>
+              Frosted cards and translucent overlays stop the page from feeling
+              dirty or overloaded and keep everything looking modern.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="menu-grid">
+          <div class="menu-panel glass reveal">
+            <div class="section-kicker">Menu Energy</div>
+            <h2 class="section-title">Flavor That Hits Like Machinery</h2>
+            <p class="section-sub">
+              Use this section to tease your signature lineup with short,
+              punchy descriptions and visual categories.
+            </p>
+
+            <div class="menu-list">
+              <div class="menu-item">
+                <div class="menu-icon">🔥</div>
+                <div class="menu-copy">
+                  <strong>Crank Chicken</strong>
+                  <span>
+                    Crispy, juicy, and built to carry loud sauces, heavy texture,
+                    and all the heat your brand promises.
+                  </span>
+                </div>
+                <div class="menu-price">Hot Pick</div>
+              </div>
+
+              <div class="menu-item">
+                <div class="menu-icon">⚙️</div>
+                <div class="menu-copy">
+                  <strong>Loaded Sides</strong>
+                  <span>
+                    Fries, slaw, and stacked add-ons that feel mechanical,
+                    crunchy, and completely overbuilt in the best way.
+                  </span>
+                </div>
+                <div class="menu-price">Side Fuel</div>
+              </div>
+
+              <div class="menu-item">
+                <div class="menu-icon">🚨</div>
+                <div class="menu-copy">
+                  <strong>Signature Sauces</strong>
+                  <span>
+                    Scream Pickle, Smokin Sauce, Crank Sauce, and future drops
+                    can sit here as branded heat systems.
+                  </span>
+                </div>
+                <div class="menu-price">Core Line</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-panel diamond-plate reveal">
+            <div class="section-kicker">Brand Snapshot</div>
+            <h2 class="section-title">Heavy Style, Light Readability</h2>
+            <p class="section-sub">
+              This design gives you that over-the-top metal-and-fire identity
+              without sacrificing clarity on desktop or mobile.
+            </p>
+
+            <div class="stats-grid">
+              <div class="stat-box glass">
+                <strong>Bold</strong>
+                <span>
+                  Big type, strong contrast, aggressive textures, and rich glow.
+                </span>
+              </div>
+              <div class="stat-box glass">
+                <strong>Clean</strong>
+                <span>
+                  Glass cards organize the noise so the eye always knows where to land.
+                </span>
+              </div>
+              <div class="stat-box glass">
+                <strong>Fast</strong>
+                <span>
+                  One-file setup means easy GitHub Pages hosting and quick edits.
+                </span>
+              </div>
+              <div class="stat-box glass">
+                <strong>Flexible</strong>
+                <span>
+                  Ready for logos, menu photos, order buttons, and launch hype.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-panel diamond-plate reveal">
+            <div class="section-kicker">Brand Mood</div>
+            <h2 class="section-title">Cluck N Crank Feels Built, Not Decorated</h2>
+            <p>
+              The visual direction here leans into fabricated metal,
+              aggressive heat, and premium polish. It should feel like the
+              brand was forged in a performance garage — not dropped into a
+              generic restaurant template.
+            </p>
+            <p>
+              That means layered surfaces, industrial edges, polished glow,
+              strong typography, and enough glass to keep the whole thing sharp.
+            </p>
+          </div>
+
+          <div class="about-panel glass reveal">
+            <div class="section-kicker">What To Add Next</div>
+            <h2 class="section-title">Easy Upgrades</h2>
+            <div class="about-list">
+              <div class="about-pill"><span class="dot"></span>Drop in your actual logo in the header and hero.</div>
+              <div class="about-pill"><span class="dot"></span>Add moving flame GIFs or video only if they stay subtle.</div>
+              <div class="about-pill"><span class="dot"></span>Swap menu teaser text for your real items and sauce names.</div>
+              <div class="about-pill"><span class="dot"></span>Link the CTA to ordering, email capture, or a launch countdown.</div>
+              <div class="about-pill"><span class="dot"></span>Add branded food photography inside the glass cards later.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="cta-shell glass reveal">
+          <div class="cta-grid">
+            <div>
+              <div class="section-kicker">Ready to Launch</div>
+              <h2>Turn the Heat On.</h2>
+              <p>
+                This is a strong visual base for Cluck N Crank. From here, the
+                next move is adding your real logo, menu names, ordering links,
+                and launch copy so the site becomes fully yours.
+              </p>
+            </div>
+
+            <a class="btn btn-primary" href="mailto:info@cluckncrank.com">
+              Contact / Launch CTA
+            </a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">© <span id="year"></span> Cluck N Crank. All rights reserved.</div>
+    <div class="container">
+      <div class="footer-shell glass reveal">
+        <div class="footer-copy">
+          <strong>Cluck N Crank</strong><br />
+          Industrial chicken energy with a premium glass finish.
+          Built for bold branding, launch hype, and fast edits on GitHub Pages.
+        </div>
+
+        <div class="footer-links">
+          <a href="#top">Top</a>
+          <a href="#menu">Menu</a>
+          <a href="#about">Vibe</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const mobileLinks = mobileMenu.querySelectorAll("a");
+    const revealItems = document.querySelectorAll('.reveal');
 
-    menuToggle.addEventListener("click", () => {
-      const isOpen = mobileMenu.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.textContent = isOpen ? "✕" : "☰";
-    });
-
-    mobileLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.textContent = "☰";
-      });
-    });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const signupForm = document.getElementById("signupForm");
-    const emailInput = document.getElementById("emailInput");
-    const formMessage = document.getElementById("formMessage");
-
-    signupForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const email = emailInput.value.trim();
-      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      formMessage.className = "form-message";
-
-      if (!email) {
-        formMessage.textContent = "Please enter your email address.";
-        formMessage.classList.add("error");
-        return;
-      }
-
-      if (!validEmail.test(email)) {
-        formMessage.textContent = "Please enter a valid email address.";
-        formMessage.classList.add("error");
-        return;
-      }
-
-      try {
-        const existing = JSON.parse(localStorage.getItem("cluckncrank-signups") || "[]");
-
-        if (!existing.includes(email.toLowerCase())) {
-          existing.push(email.toLowerCase());
-          localStorage.setItem("cluckncrank-signups", JSON.stringify(existing));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
-
-        formMessage.textContent = "You’re on the list. We’ll keep you posted.";
-        formMessage.classList.add("success");
-        signupForm.reset();
-      } catch (error) {
-        formMessage.textContent = "Thanks — your interest is noted, but local saving is unavailable on this device.";
-        formMessage.classList.add("success");
-      }
+      });
+    }, {
+      threshold: 0.15
     });
 
-    const reveals = document.querySelectorAll(".reveal");
-
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-
-    reveals.forEach((item) => revealObserver.observe(item));
+    revealItems.forEach((item) => observer.observe(item));
   </script>
 </body>
 </html>
