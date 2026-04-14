@@ -170,9 +170,13 @@
     .diamond-plate {
       position: relative;
       overflow: hidden;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
-        linear-gradient(180deg, #1a1d21 0%, #111317 100%);
+      background-image:
+        linear-gradient(145deg, rgba(18, 20, 26, 0.86), rgba(7, 8, 10, 0.96)),
+        url('assets/diamond-plate.png');
+      background-size: 420px 420px;
+      background-repeat: repeat;
+      background-position: center;
+      background-blend-mode: multiply;
       border: 1px solid rgba(255,255,255,0.10);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.08),
@@ -185,11 +189,10 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.09) 25%, transparent 25%) -18px 0/36px 36px,
-        linear-gradient(225deg, rgba(255,255,255,0.09) 25%, transparent 25%) -18px 0/36px 36px,
-        linear-gradient(315deg, rgba(255,255,255,0.06) 25%, transparent 25%) 0 0/36px 36px,
-        linear-gradient(45deg, rgba(255,255,255,0.06) 25%, transparent 25%) 0 0/36px 36px;
-      opacity: 0.24;
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.14), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(255,255,255,0.10), transparent 35%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), transparent 60%);
+      opacity: 0.38;
       pointer-events: none;
     }
 
@@ -269,6 +272,16 @@
         0 16px 24px rgba(0,0,0,0.35);
       border: 1px solid rgba(255,255,255,0.16);
       flex-shrink: 0;
+    }
+
+    .brand-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
     }
 
     .brand-badge::before {
@@ -527,6 +540,14 @@
       background: rgba(255, 112, 44, 0.14);
       border: 1px solid rgba(255, 173, 91, 0.2);
       box-shadow: var(--fire-shadow);
+    }
+
+    .top-pill img {
+      display: block;
+      width: 160px;
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
     }
 
     .machine-card {
@@ -976,26 +997,23 @@
     }
 
     .sauce-chip {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 0 14px rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
 
-    .sauce-chip.crank {
-      background: linear-gradient(135deg, #ffbe56, #ff6b1a, #ff3d2e);
-      box-shadow: 0 0 16px rgba(255, 95, 35, 0.45);
-    }
-
-    .sauce-chip.pickle {
-      background: linear-gradient(135deg, #d4ff72, #84cb37, #4f8f17);
-      box-shadow: 0 0 16px rgba(126, 214, 44, 0.38);
-    }
-
-    .sauce-chip.smoke {
-      background: linear-gradient(135deg, #f0f0f0, #a7adb8, #626873);
-      box-shadow: 0 0 16px rgba(183, 190, 204, 0.28);
+    .sauce-chip img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
     }
 
     .sauce-copy strong {
@@ -1274,7 +1292,9 @@
     <div class="container">
       <div class="nav-shell glass glow-line">
         <a class="brand" href="#top">
-          <div class="brand-badge"><span>CNC</span></div>
+          <div class="brand-badge">
+            <img src="assets/cnc-logo.png" alt="Cluck N Crank logo" loading="lazy" />
+          </div>
           <div class="brand-text">
             <strong>Cluck N Crank</strong>
             <span>Crispy Chicken • Loaded Combos • Heavy Flavor</span>
@@ -1340,7 +1360,9 @@
 
             <div class="hero-visual glass">
               <div class="visual-stack">
-                <div class="top-pill">Powered By CNC</div>
+                <div class="top-pill">
+                  <img src="assets/powered-by.png" alt="Powered by CNC" loading="lazy" />
+                </div>
 
                 <div class="machine-card diamond-plate">
                   <div class="machine-top">
@@ -1534,7 +1556,9 @@
 
             <div class="sauce-list">
               <div class="sauce-row">
-                <div class="sauce-chip crank"></div>
+                <div class="sauce-chip">
+                  <img src="assets/sauce-1.svg" alt="Crank Sauce logo" loading="lazy" />
+                </div>
                 <div class="sauce-copy">
                   <strong>Crank Sauce</strong>
                   <span>
@@ -1545,7 +1569,9 @@
               </div>
 
               <div class="sauce-row">
-                <div class="sauce-chip pickle"></div>
+                <div class="sauce-chip">
+                  <img src="assets/sauce-2.svg" alt="Screamn Pickle logo" loading="lazy" />
+                </div>
                 <div class="sauce-copy">
                   <strong>Screamn Pickle</strong>
                   <span>
@@ -1557,7 +1583,9 @@
               </div>
 
               <div class="sauce-row">
-                <div class="sauce-chip smoke"></div>
+                <div class="sauce-chip">
+                  <img src="assets/sauce-3.svg" alt="Smoken Sauce logo" loading="lazy" />
+                </div>
                 <div class="sauce-copy">
                   <strong>Smoken Sauce</strong>
                   <span>
@@ -1693,3 +1721,4 @@
   </script>
 </body>
 </html>
+
