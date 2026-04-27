@@ -317,41 +317,7 @@
       white-space: nowrap;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: var(--transition);
-      font-size: 0.95rem;
-      border: 1px solid transparent;
-    }
-
-    .nav-links a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.08);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 0;
-      cursor: pointer;
-      font: inherit;
-      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-      text-decoration: none;
-      white-space: nowrap;
-    }
+    .nav-links{justify-content:center;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:10px;}.nav-links a{width:100%;text-align:center;}
 
     .btn:hover {
       transform: translateY(-2px);
@@ -1206,9 +1172,7 @@
         text-align: center;
       }
 
-      .nav-links {
-        justify-content: center;
-      }
+      .nav-links{justify-content:center;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:10px;}.nav-links a{width:100%;text-align:center;}
 
       .hero-shell {
         padding: 16px;
@@ -1281,7 +1245,7 @@
       <div class="nav-shell glass glow-line">
         <a class="brand" href="#top">
           <div class="brand-badge">
-            <img src="assets/cnc-logo.png" alt="Cluck N Crank logo" loading="lazy" />
+            <span>CNC</span>
           </div>
           <div class="brand-text">
             <strong>Cluck N Crank</strong>
@@ -1348,9 +1312,7 @@
 
             <div class="hero-visual glass">
               <div class="visual-stack">
-                <div class="top-pill">
-                  <img src="assets/powered-by.png" alt="Powered by CNC" loading="lazy" />
-                </div>
+                <div class="top-pill"><span class="top-pill-text">Powered by CNC</span></div><div class="top-pill secondary">NO BORING CHICKEN</div>
 
                 <div class="machine-card diamond-plate">
                   <div class="machine-top">
