@@ -2,1258 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Cluck N Crank</title>
+
   <meta
     name="description"
     content="Cluck N Crank — bold chicken combos, industrial attitude, loaded fries, pickle bombs, and high-heat flavor."
   />
-  <style>
-    :root {
-      --bg: #070708;
-      --bg-2: #101114;
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel-strong: rgba(255, 255, 255, 0.12);
-      --panel-border: rgba(255, 255, 255, 0.18);
-      --text: #f7f7f7;
-      --muted: #c4c7cf;
-      --orange: #ff6b1a;
-      --orange-2: #ff9a1f;
-      --red: #ff3d2e;
-      --gold: #ffc84d;
-      --steel: #aab5c2;
-      --steel-dark: #4f5a66;
-      --lime: #92d941;
-      --smoke: #b7b9bf;
-      --glass-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
-      --fire-shadow: 0 0 20px rgba(255, 107, 26, 0.35), 0 0 40px rgba(255, 61, 46, 0.18);
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --max: 1240px;
-      --transition: 220ms ease;
-    }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(255, 200, 77, 0.10), transparent 0 20%),
-        radial-gradient(circle at 85% 10%, rgba(255, 61, 46, 0.14), transparent 0 22%),
-        radial-gradient(circle at 50% 100%, rgba(255, 107, 26, 0.10), transparent 0 24%),
-        linear-gradient(180deg, #15171b 0%, #09090b 45%, #040405 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.05) 25%, transparent 25%) -14px 0/28px 28px,
-        linear-gradient(225deg, rgba(255,255,255,0.05) 25%, transparent 25%) -14px 0/28px 28px,
-        linear-gradient(315deg, rgba(255,255,255,0.04) 25%, transparent 25%) 0 0/28px 28px,
-        linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%) 0 0/28px 28px;
-      opacity: 0.05;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: auto 0 -170px 0;
-      height: 380px;
-      background:
-        radial-gradient(circle at 10% 100%, rgba(255, 107, 26, 0.22), transparent 35%),
-        radial-gradient(circle at 30% 100%, rgba(255, 61, 46, 0.18), transparent 32%),
-        radial-gradient(circle at 50% 100%, rgba(255, 154, 31, 0.20), transparent 38%),
-        radial-gradient(circle at 75% 100%, rgba(255, 107, 26, 0.18), transparent 34%),
-        radial-gradient(circle at 90% 100%, rgba(255, 61, 46, 0.16), transparent 28%);
-      filter: blur(28px);
-      opacity: 0.92;
-      pointer-events: none;
-      z-index: 0;
-      animation: firePulse 4.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes firePulse {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 0.72;
-      }
-      to {
-        transform: translateY(-12px) scale(1.03);
-        opacity: 0.95;
-      }
-    }
-
-    @keyframes flameRise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.85;
-      }
-      50% {
-        transform: translateY(-10px) scale(1.04, 1.12);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-22px) scale(0.96, 1.2);
-        opacity: 0.76;
-      }
-    }
-
-    @keyframes emberFloat {
-      0% {
-        transform: translateY(0) scale(0.9);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-180px) translateX(20px) scale(1.15);
-        opacity: 0;
-      }
-    }
-
-    @keyframes flicker {
-      0%, 100% {
-        opacity: 0.92;
-        transform: scale(1);
-      }
-      25% {
-        opacity: 0.75;
-        transform: scale(1.04);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(0.98);
-      }
-      75% {
-        opacity: 0.86;
-        transform: scale(1.02);
-      }
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: min(calc(100% - 28px), var(--max));
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .diamond-plate {
-      position: relative;
-      overflow: hidden;
-      background-image:
-        linear-gradient(145deg, rgba(18, 20, 26, 0.86), rgba(7, 8, 10, 0.96)),
-        url('assets/diamond-plate.png');
-      background-size: 420px 420px;
-      background-repeat: repeat;
-      background-position: center;
-      background-blend-mode: multiply;
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        inset 0 -1px 0 rgba(0,0,0,0.45),
-        0 16px 40px rgba(0,0,0,0.35);
-    }
-
-    .diamond-plate::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.14), transparent 45%),
-        radial-gradient(circle at 80% 0%, rgba(255,255,255,0.10), transparent 35%),
-        linear-gradient(180deg, rgba(255,255,255,0.08), transparent 60%);
-      opacity: 0.38;
-      pointer-events: none;
-    }
-
-    .glass {
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.14) 0%,
-        rgba(255, 255, 255, 0.07) 100%
-      );
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--panel-border);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.16),
-        var(--glass-shadow);
-    }
-
-    .glow-line {
-      position: relative;
-    }
-
-    .glow-line::after {
-      content: "";
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: -1px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--orange), var(--gold), transparent);
-      box-shadow: var(--fire-shadow);
-      opacity: 0.92;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 12px 0;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      background: rgba(7, 8, 10, 0.64);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-     @keyframes navGlow {       0% {         background-position: 0% 50%;         opacity: 0.75;       }       50% {         background-position: 100% 50%;         opacity: 1;       }       100% {         background-position: 0% 50%;         opacity: 0.9;       }     }      .nav-shell {       position: relative;       overflow: hidden;       isolation: isolate;       border-radius: 999px;       padding: 10px 18px;       display: flex;       align-items: center;       justify-content: space-between;       gap: 18px;     }      .nav-shell::before {       content: "";       position: absolute;       inset: -140% -50%;       background: linear-gradient(         90deg,         rgba(255, 61, 46, 0.0),         rgba(255, 61, 46, 0.18) 14%,         rgba(255, 107, 26, 0.32) 38%,         rgba(255, 200, 77, 0.22) 56%,         rgba(255, 107, 26, 0.30) 72%,         rgba(255, 61, 46, 0.18) 88%,         rgba(255, 61, 46, 0.0)       );       background-size: 200% 100%;       mix-blend-mode: screen;       filter: blur(18px);       animation: navGlow 4.8s ease-in-out infinite;       pointer-events: none;       opacity: 0.7;       z-index: 0;     }      .nav-shell > * {       position: relative;       z-index: 1;     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .brand-badge {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 30% 25%, #ffd56f 0%, #ff9a1f 28%, #ff5d1f 60%, #8b1b08 100%);
-      box-shadow:
-        inset 0 2px 10px rgba(255,255,255,0.25),
-        0 0 18px rgba(255,107,26,0.5),
-        0 16px 24px rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.16);
-      flex-shrink: 0;
-    }
-
-    .brand-badge img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 6px;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
-    }
-
-    .brand-badge::before {
-      content: "";
-      position: absolute;
-      inset: auto 8px 5px 8px;
-      height: 18px;
-      background:
-        radial-gradient(circle at 20% 100%, rgba(255, 238, 166, 0.95), rgba(255, 164, 35, 0.88) 34%, rgba(255, 76, 34, 0.82) 68%, transparent 70%),
-        radial-gradient(circle at 48% 100%, rgba(255, 236, 150, 0.95), rgba(255, 146, 27, 0.86) 30%, rgba(255, 60, 46, 0.8) 66%, transparent 68%),
-        radial-gradient(circle at 78% 100%, rgba(255, 231, 140, 0.94), rgba(255, 145, 24, 0.84) 28%, rgba(255, 58, 36, 0.78) 64%, transparent 66%);
-      filter: blur(2px);
-      animation: flicker 2.2s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .brand-badge span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .brand-text {
-      min-width: 0;
-    }
-
-    .brand-text strong {
-      display: block;
-      font-size: 1rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .brand-text span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .nav-links{justify-content:center;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:10px;}.nav-links a{width:100%;text-align:center;}
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      padding: 15px 22px;
-      border-radius: 999px;
-      color: #fff;
-      background:
-        linear-gradient(135deg, var(--orange-2), var(--orange), var(--red));
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.22),
-        0 12px 24px rgba(255, 92, 30, 0.28),
-        0 0 26px rgba(255, 92, 30, 0.18);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .btn-secondary {
-      padding: 15px 22px;
-      border-radius: 999px;
-      color: #fff;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-      font-weight: 700;
-    }
-
-    .hero {
-      padding: 34px 0 26px;
-    }
-
-    .hero-shell {
-      position: relative;
-      border-radius: 34px;
-      padding: 26px;
-      overflow: hidden;
-    }
-
-    .hero-shell::after {
-      content: "";
-      position: absolute;
-      inset: auto -10% -18% -10%;
-      height: 46%;
-      background:
-        radial-gradient(circle at 8% 100%, rgba(255, 107, 26, 0.30), transparent 28%),
-        radial-gradient(circle at 26% 100%, rgba(255, 61, 46, 0.24), transparent 24%),
-        radial-gradient(circle at 52% 100%, rgba(255, 154, 31, 0.28), transparent 30%),
-        radial-gradient(circle at 73% 100%, rgba(255, 107, 26, 0.24), transparent 26%),
-        radial-gradient(circle at 94% 100%, rgba(255, 61, 46, 0.20), transparent 22%);
-      filter: blur(22px);
-      pointer-events: none;
-      animation: firePulse 5s ease-in-out infinite alternate;
-    }
-
-    .hero-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.06fr 0.94fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .hero-copy,
-    .hero-visual {
-      border-radius: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-copy {
-      padding: 34px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      margin-bottom: 18px;
-      color: #ffe5bf;
-      background: rgba(255, 116, 43, 0.12);
-      border: 1px solid rgba(255, 167, 77, 0.18);
-      font-size: 0.84rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      box-shadow: var(--fire-shadow);
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(2.7rem, 6vw, 5.8rem);
-      line-height: 0.94;
-      letter-spacing: -0.04em;
-      max-width: 9ch;
-      text-transform: uppercase;
-      text-wrap: balance;
-      text-shadow:
-        0 0 18px rgba(255, 107, 26, 0.16),
-        0 14px 24px rgba(0, 0, 0, 0.34);
-    }
-
-    .hero h1 .hot {
-      background: linear-gradient(180deg, #fff7eb 0%, #ffc76b 44%, #ff7d29 78%, #ff442e 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 14px rgba(255,107,26,0.16));
-    }
-
-    .hero p {
-      margin: 18px 0 0;
-      max-width: 60ch;
-      color: var(--muted);
-      font-size: 1.06rem;
-      line-height: 1.72;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 26px;
-    }
-
-    .hero-points {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .hero-point {
-      padding: 16px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .hero-point strong {
-      display: block;
-      font-size: 1.05rem;
-      margin-bottom: 4px;
-    }
-
-    .hero-point span {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .hero-visual {
-      min-height: 610px;
-      display: grid;
-      align-items: stretch;
-      padding: 20px;
-    }
-
-    .visual-stack {
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 16px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .top-pill {
-      justify-self: end;
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: #ffe8bf;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      background: rgba(255, 112, 44, 0.14);
-      border: 1px solid rgba(255, 173, 91, 0.2);
-      box-shadow: var(--fire-shadow);
-    }
-
-    .top-pill img {
-      display: block;
-      width: 160px;
-      max-width: 100%;
-      height: auto;
-      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
-    }
-
-    .machine-card {
-      position: relative;
-      border-radius: 28px;
-      padding: 24px;
-      min-height: 100%;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .machine-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 28% 25%, rgba(255,255,255,0.24), transparent 22%),
-        radial-gradient(circle at 78% 20%, rgba(255,255,255,0.12), transparent 18%),
-        radial-gradient(circle at 50% 88%, rgba(255, 107, 26, 0.26), transparent 32%);
-      pointer-events: none;
-    }
-
-    .machine-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .serial {
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .status-light {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #ffd9a6;
-      font-size: 0.8rem;
-      font-weight: 700;
-    }
-
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 35%, #fff4c4 0%, #ffb62d 45%, #ff502d 100%);
-      box-shadow:
-        0 0 10px rgba(255, 138, 30, 0.7),
-        0 0 24px rgba(255, 72, 46, 0.35);
-      animation: blink 1.8s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.72; transform: scale(0.9); }
-    }
-
-    .fire-stage {
-      position: relative;
-      min-height: 220px;
-      margin: 22px 0 8px;
-      display: grid;
-      place-items: center;
-      z-index: 1;
-    }
-
-    .fire-bed {
-      position: absolute;
-      left: 50%;
-      bottom: 12px;
-      transform: translateX(-50%);
-      width: 82%;
-      height: 42px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255, 196, 79, 0.45), rgba(255, 109, 23, 0.22) 50%, transparent 72%);
-      filter: blur(10px);
-    }
-
-    .flame-cluster {
-      position: relative;
-      width: 270px;
-      height: 210px;
-    }
-
-    .flame {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform-origin: center bottom;
-      border-radius: 50% 50% 42% 42%;
-      filter: blur(0.5px);
-      mix-blend-mode: screen;
-      animation: flameRise 2.8s ease-in-out infinite;
-    }
-
-    .flame.outer-left {
-      width: 92px;
-      height: 150px;
-      margin-left: -118px;
-      background:
-        radial-gradient(circle at 50% 78%, rgba(255,247,216,0.92), rgba(255, 197, 91, 0.92) 18%, rgba(255, 138, 29, 0.88) 40%, rgba(255, 78, 35, 0.68) 68%, rgba(255, 44, 21, 0.06) 88%, transparent 90%);
-      transform: rotate(-10deg);
-      animation-delay: -0.8s;
-    }
-
-    .flame.inner-left {
-      width: 74px;
-      height: 128px;
-      margin-left: -64px;
-      background:
-        radial-gradient(circle at 50% 78%, rgba(255,249,223,0.98), rgba(255, 212, 105, 0.95) 16%, rgba(255, 152, 30, 0.88) 42%, rgba(255, 80, 30, 0.6) 72%, transparent 92%);
-      transform: rotate(-4deg);
-      animation-delay: -1.4s;
-    }
-
-    .flame.center {
-      width: 112px;
-      height: 182px;
-      margin-left: -56px;
-      background:
-        radial-gradient(circle at 50% 80%, rgba(255,255,235,0.98), rgba(255, 220, 130, 0.96) 15%, rgba(255, 174, 36, 0.92) 36%, rgba(255, 93, 24, 0.8) 58%, rgba(255, 49, 25, 0.22) 82%, transparent 92%);
-      animation-duration: 2.2s;
-    }
-
-    .flame.inner-right {
-      width: 76px;
-      height: 132px;
-      margin-left: 2px;
-      background:
-        radial-gradient(circle at 50% 78%, rgba(255,249,223,0.98), rgba(255, 212, 105, 0.95) 16%, rgba(255, 152, 30, 0.88) 42%, rgba(255, 80, 30, 0.6) 72%, transparent 92%);
-      transform: rotate(5deg);
-      animation-delay: -1s;
-    }
-
-    .flame.outer-right {
-      width: 96px;
-      height: 154px;
-      margin-left: 30px;
-      background:
-        radial-gradient(circle at 50% 78%, rgba(255,247,216,0.92), rgba(255, 197, 91, 0.92) 18%, rgba(255, 138, 29, 0.88) 40%, rgba(255, 78, 35, 0.68) 68%, rgba(255, 44, 21, 0.06) 88%, transparent 90%);
-      transform: rotate(12deg);
-      animation-delay: -1.7s;
-    }
-
-    .ember {
-      position: absolute;
-      bottom: 16px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 35%, #fff4c9 0%, #ffc143 36%, #ff6725 68%, transparent 74%);
-      box-shadow: 0 0 12px rgba(255,145,35,0.7);
-      animation: emberFloat linear infinite;
-    }
-
-    .ember.e1 { left: 20%; animation-duration: 4.2s; animation-delay: -0.4s; }
-    .ember.e2 { left: 34%; animation-duration: 5s; animation-delay: -1.6s; }
-    .ember.e3 { left: 48%; animation-duration: 4.6s; animation-delay: -2.4s; }
-    .ember.e4 { left: 58%; animation-duration: 5.4s; animation-delay: -1.1s; }
-    .ember.e5 { left: 68%; animation-duration: 4.8s; animation-delay: -3s; }
-    .ember.e6 { left: 78%; animation-duration: 5.2s; animation-delay: -2s; }
-
-    .machine-title {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      margin-top: 8px;
-    }
-
-    .machine-title h3 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-    }
-
-    .machine-title p {
-      margin: 10px auto 0;
-      color: var(--muted);
-      max-width: 34ch;
-      line-height: 1.6;
-    }
-
-    .badge-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 26px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .badge-box {
-      border-radius: 20px;
-      padding: 18px;
-      min-height: 120px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .badge-box strong {
-      display: block;
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 8px;
-    }
-
-    .badge-box span {
-      display: block;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .plate-tag {
-      align-self: start;
-      margin-top: 18px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      box-shadow: 0 0 18px rgba(255,107,26,0.18);
-      position: relative;
-      z-index: 2;
-    }
-
-    .section {
-      padding: 26px 0;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .section-kicker {
-      color: #ffd49a;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.78rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: clamp(2rem, 3.5vw, 3.4rem);
-      line-height: 1.02;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-    }
-
-    .section-sub {
-      margin: 10px 0 0;
-      max-width: 60ch;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .feature-card {
-      border-radius: 24px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card::before {
-      content: "";
-      position: absolute;
-      inset: auto -10% -25% -10%;
-      height: 140px;
-      background:
-        radial-gradient(circle at 10% 100%, rgba(255, 107, 26, 0.22), transparent 34%),
-        radial-gradient(circle at 70% 100%, rgba(255, 61, 46, 0.18), transparent 34%);
-      filter: blur(18px);
-      pointer-events: none;
-    }
-
-    .feature-number {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      font-weight: 900;
-      color: #fff;
-      background:
-        linear-gradient(135deg, rgba(255, 194, 77, 0.95), rgba(255, 107, 26, 0.95), rgba(255, 61, 46, 0.95));
-      box-shadow: var(--fire-shadow);
-    }
-
-    .feature-card h3 {
-      margin: 0 0 8px;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    .feature-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.68;
-    }
-
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 18px;
-    }
-
-    .menu-panel,
-    .about-panel,
-    .cta-shell,
-    .footer-shell {
-      border-radius: 28px;
-      padding: 26px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .menu-list {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .menu-item {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 14px;
-      align-items: start;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
-    }
-
-    .menu-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 1.15rem;
-      background:
-        linear-gradient(145deg, rgba(255, 200, 77, 0.18), rgba(255, 107, 26, 0.14));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--fire-shadow);
-    }
-
-    .menu-copy strong {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    .menu-copy span {
-      display: block;
-      color: var(--muted);
-      line-height: 1.58;
-      font-size: 0.94rem;
-    }
-
-    .menu-price {
-      font-weight: 900;
-      color: #ffe0ac;
-      letter-spacing: 0.03em;
-      font-size: 1.05rem;
-      white-space: nowrap;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .stat-box {
-      border-radius: 20px;
-      padding: 18px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .stat-box strong {
-      display: block;
-      font-size: clamp(1.3rem, 3vw, 1.9rem);
-      line-height: 1.05;
-      margin-bottom: 8px;
-      color: #fff3db;
-      text-shadow: 0 0 18px rgba(255, 107, 26, 0.14);
-    }
-
-    .stat-box span {
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .sauce-list {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .sauce-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 14px;
-      border-radius: 18px;
-      padding: 15px 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .sauce-chip {
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 0 14px rgba(255,255,255,0.08);
-      flex-shrink: 0;
-    }
-
-    .sauce-chip img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 6px;
-      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
-    }
-
-    .sauce-copy strong {
-      display: block;
-      text-transform: uppercase;
-      font-size: 0.98rem;
-      margin-bottom: 4px;
-    }
-
-    .sauce-copy span {
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.5;
-      display: block;
-    }
-
-    .sauce-tag {
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: #fff0cf;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 18px;
-    }
-
-    .about-panel p {
-      color: var(--muted);
-      line-height: 1.76;
-    }
-
-    .about-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .about-pill {
-      padding: 16px 18px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      color: #f6f6f7;
-      font-weight: 700;
-    }
-
-    .about-pill .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, #ffe8b2 0%, #ffb034 42%, #ff4c2f 100%);
-      box-shadow: 0 0 14px rgba(255,107,26,0.55);
-      flex-shrink: 0;
-    }
-
-    .cta-shell {
-      padding: 30px;
-    }
-
-    .cta-shell::before {
-      content: "";
-      position: absolute;
-      inset: auto -8% -30% -8%;
-      height: 180px;
-      background:
-        radial-gradient(circle at 15% 100%, rgba(255, 107, 26, 0.26), transparent 32%),
-        radial-gradient(circle at 55% 100%, rgba(255, 200, 77, 0.20), transparent 30%),
-        radial-gradient(circle at 88% 100%, rgba(255, 61, 46, 0.22), transparent 26%);
-      filter: blur(24px);
-      pointer-events: none;
-    }
-
-    .cta-grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 18px;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-shell h2 {
-      margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-    }
-
-    .cta-shell p {
-      margin: 0;
-      max-width: 60ch;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    footer {
-      padding: 26px 0 40px;
-    }
-
-    .footer-shell {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-
-    .footer-copy {
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 52ch;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.09);
-      color: #fff;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--fire-shadow);
-    }
-
-    .logo-note {
-      margin-top: 12px;
-      font-size: 0.84rem;
-      color: #dadde5;
-      opacity: 0.82;
-      line-height: 1.5;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 700ms ease, transform 700ms ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 1080px) {
-      .hero-grid,
-      .menu-grid,
-      .about-grid,
-      .cta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-visual {
-        min-height: 520px;
-      }
-
-      .feature-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .hero h1 {
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 760px) {
-       @keyframes navGlow {       0% {         background-position: 0% 50%;         opacity: 0.75;       }       50% {         background-position: 100% 50%;         opacity: 1;       }       100% {         background-position: 0% 50%;         opacity: 0.9;       }     }      .nav-shell {       position: relative;       overflow: hidden;       isolation: isolate;       border-radius: 999px;       padding: 10px 18px;       display: flex;       align-items: center;       justify-content: space-between;       gap: 18px;     }      .nav-shell::before {       content: "";       position: absolute;       inset: -140% -50%;       background: linear-gradient(         90deg,         rgba(255, 61, 46, 0.0),         rgba(255, 61, 46, 0.18) 14%,         rgba(255, 107, 26, 0.32) 38%,         rgba(255, 200, 77, 0.22) 56%,         rgba(255, 107, 26, 0.30) 72%,         rgba(255, 61, 46, 0.18) 88%,         rgba(255, 61, 46, 0.0)       );       background-size: 200% 100%;       mix-blend-mode: screen;       filter: blur(18px);       animation: navGlow 4.8s ease-in-out infinite;       pointer-events: none;       opacity: 0.7;       z-index: 0;     }      .nav-shell > * {       position: relative;       z-index: 1;     }
-
-      .brand {
-        justify-content: center;
-      }
-
-      .brand-text strong,
-      .brand-text span {
-        white-space: normal;
-        text-align: center;
-      }
-
-      .nav-links{justify-content:center;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:10px;}.nav-links a{width:100%;text-align:center;}
-
-      .hero-shell {
-        padding: 16px;
-      }
-
-      .hero-copy,
-      .menu-panel,
-      .about-panel,
-      .cta-shell,
-      .footer-shell,
-      .hero-visual {
-        padding: 20px;
-        border-radius: 24px;
-      }
-
-      .hero-copy {
-        padding: 24px 20px;
-      }
-
-      .hero-points,
-      .stats-grid,
-      .badge-grid,
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .machine-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .section-head {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .footer-shell {
-        align-items: flex-start;
-      }
-
-      .menu-item,
-      .sauce-row {
-        grid-template-columns: auto 1fr;
-      }
-
-      .menu-price,
-      .sauce-tag {
-        grid-column: 2;
-        justify-self: start;
-      }
-
-      .cta-grid {
-        gap: 20px;
-      }
-
-      .cta-grid .btn {
-        width: 100%;
-      }
-
-      .flame-cluster {
-        width: 220px;
-        height: 190px;
-      }
-    }
-  </style><style>@media (min-width: 761px){.nav-shell{flex-direction:row;align-items:center;}.nav-links{flex-direction:row;align-items:center;width:auto;justify-content:flex-end;gap:16px;}.nav-links a{width:auto;}}</style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container">
       <div class="nav-shell glass glow-line">
-        <a class="brand" href="#top">
+        <a class="brand" href="#top" aria-label="Cluck N Crank home">
           <div class="brand-badge">
-            <img src="data:image/png;base64,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" alt="Cluck N Crank logo" />
+            <img src="assets/logo.png" alt="Cluck N Crank logo" />
           </div>
+
           <div class="brand-text">
             <strong>Cluck N Crank</strong>
             <span>Crispy Chicken • Loaded Combos • Heavy Flavor</span>
           </div>
         </a>
 
-        <nav class="nav-links">
+        <nav class="nav-links" aria-label="Main navigation">
           <a href="#flavor">Flavor</a>
           <a href="#menu">Menu</a>
           <a href="#about">Vibe</a>
@@ -1272,9 +48,9 @@
               <div class="eyebrow">High Heat. Hard Crunch. Full Send.</div>
 
               <h1>
-                INDUSTRIAL
-                <span class="hot">CHICKEN</span>
-                ENERGY
+                Industrial
+                <span class="hot">Chicken</span>
+                Energy
               </h1>
 
               <p>
@@ -1294,31 +70,37 @@
                   <strong>4 Combos</strong>
                   <span>2-count, 4-count, 6-count tenders, plus a sandwich combo.</span>
                 </div>
+
                 <div class="hero-point">
                   <strong>3 Sauces</strong>
                   <span>Crank Sauce, Screamn Pickle, and Smoken Sauce.</span>
                 </div>
+
                 <div class="hero-point">
                   <strong>Every Order Loaded</strong>
                   <span>Fries and 2 pickle bombs come with every combo.</span>
                 </div>
               </div>
-
-              <div class="logo-note">
-                Add your real logo later by replacing the CNC badge in the header
-                and dropping your main brand mark into the hero visual.
-              </div>
             </div>
 
             <div class="hero-visual glass">
               <div class="visual-stack">
-                <div class="top-pill"><span class="top-pill-text"><img src="data:image/jpeg;base64,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" alt="Powered by CNC" class="powered-img" /></span></div><div class="top-pill secondary">NO BORING CHICKEN</div>
+                <div class="top-pill">
+                  <img
+                    src="assets/powered-by-cnc.png"
+                    alt="Powered by CNC"
+                    class="powered-img"
+                  />
+                </div>
+
+                <div class="top-pill secondary">No Boring Chicken</div>
 
                 <div class="machine-card diamond-plate">
                   <div class="machine-top">
                     <div>
                       <div class="serial">CNC // Heat System Online</div>
                     </div>
+
                     <div class="status-light">
                       <span class="status-dot"></span>
                       Fryers Active
@@ -1355,27 +137,22 @@
                   <div class="badge-grid">
                     <div class="badge-box glass">
                       <strong>Quick Crank Combo</strong>
-                      <span>
-                        2 tenders with fries, 2 pickle bombs, and 1 sauce included.
-                      </span>
+                      <span>2 tenders with fries, 2 pickle bombs, and 1 sauce included.</span>
                     </div>
+
                     <div class="badge-box glass">
                       <strong>Full Crank Combo</strong>
-                      <span>
-                        4 tenders loaded out with the full Cluck N Crank treatment.
-                      </span>
+                      <span>4 tenders loaded out with the full Cluck N Crank treatment.</span>
                     </div>
+
                     <div class="badge-box glass">
                       <strong>Overdrive Combo</strong>
-                      <span>
-                        6 tenders for max crunch, max heat, and max attitude.
-                      </span>
+                      <span>6 tenders for max crunch, max heat, and max attitude.</span>
                     </div>
+
                     <div class="badge-box glass">
                       <strong>Crank Stack Combo</strong>
-                      <span>
-                        The sandwich combo built to punch just as hard as the tenders.
-                      </span>
+                      <span>The sandwich combo built to punch just as hard as the tenders.</span>
                     </div>
                   </div>
 
@@ -1395,9 +172,8 @@
             <div class="section-kicker">Visual DNA</div>
             <h2 class="section-title">Maximal Heat, Controlled Finish</h2>
             <p class="section-sub">
-              The goal is not simple. The goal is loud, memorable, hot, and
-              premium — like a machine shop, a fry line, and a fire-lit lounge
-              all collided into one brand.
+              Loud, memorable, hot, and premium. A machine shop, a fry line,
+              and a fire-lit lounge smashed into one chicken brand.
             </p>
           </div>
         </div>
@@ -1405,28 +181,28 @@
         <div class="feature-grid">
           <article class="feature-card glass reveal">
             <div class="feature-number">01</div>
-            <h3>Metal Everywhere</h3>
+            <h3>Heavy Metal</h3>
             <p>
-              Diamond plate textures, brushed steel accents, and dark layered
-              surfaces build the industrial backbone of Cluck N Crank.
+              Diamond plate textures, dark layered panels, brushed steel tones,
+              and hard industrial edges give the brand its backbone.
             </p>
           </article>
 
           <article class="feature-card glass reveal">
             <div class="feature-number">02</div>
-            <h3>Actual Fire Energy</h3>
+            <h3>Real Fire Energy</h3>
             <p>
-              Live animated flame shapes, heat glow, and ember movement give
-              the page a real fired-up feeling instead of just orange lighting.
+              Animated flame shapes, heat glow, and ember movement make the page
+              feel fired up instead of simply colored orange.
             </p>
           </article>
 
           <article class="feature-card glass reveal">
             <div class="feature-number">03</div>
-            <h3>Clean Glass Balance</h3>
+            <h3>Premium Glass</h3>
             <p>
-              Frosted glass panels keep the page readable and premium while the
-              industrial chaos stays controlled.
+              Frosted panels keep the page readable and polished while the
+              industrial chaos stays sharp and controlled.
             </p>
           </article>
         </div>
@@ -1441,7 +217,7 @@
             <h2 class="section-title">Built To Hit Hard</h2>
             <p class="section-sub">
               Every combo comes with fries, 2 pickle bombs, and 1 sauce included.
-              Crank Sauce is the standard issue, but you can switch it out or
+              Crank Sauce is the standard issue, but guests can switch it out or
               add Screamn Pickle or Smoken Sauce.
             </p>
 
@@ -1500,8 +276,8 @@
             <div class="section-kicker">Sauce System</div>
             <h2 class="section-title">The Core Flavor Lineup</h2>
             <p class="section-sub">
-              Crank Sauce comes with every order by default. Want to switch it
-              up or add more heat? Bring in Screamn Pickle or Smoken Sauce.
+              Crank Sauce comes with every order by default. Want to switch it up
+              or add more heat? Bring in Screamn Pickle or Smoken Sauce.
             </p>
 
             <div class="sauce-list">
@@ -1511,9 +287,7 @@
                 </div>
                 <div class="sauce-copy">
                   <strong>Crank Sauce</strong>
-                  <span>
-                    The house sauce and the standard setup on every combo.
-                  </span>
+                  <span>The house sauce and the standard setup on every combo.</span>
                 </div>
                 <div class="sauce-tag">Included</div>
               </div>
@@ -1524,10 +298,7 @@
                 </div>
                 <div class="sauce-copy">
                   <strong>Screamn Pickle</strong>
-                  <span>
-                    Tangy, sharp, punchy pickle flavor for people who want the
-                    green heat.
-                  </span>
+                  <span>Tangy, sharp, punchy pickle flavor for people who want the green heat.</span>
                 </div>
                 <div class="sauce-tag">Swap / Add</div>
               </div>
@@ -1538,9 +309,7 @@
                 </div>
                 <div class="sauce-copy">
                   <strong>Smoken Sauce</strong>
-                  <span>
-                    Smoky, deep, and heavier on that rich heat profile.
-                  </span>
+                  <span>Smoky, deep, and heavier on that rich heat profile.</span>
                 </div>
                 <div class="sauce-tag">Swap / Add</div>
               </div>
@@ -1549,27 +318,22 @@
             <div class="stats-grid">
               <div class="stat-box glass">
                 <strong>Fries</strong>
-                <span>
-                  Every combo lands with fries as part of the standard loadout.
-                </span>
+                <span>Every combo lands with fries as part of the standard loadout.</span>
               </div>
+
               <div class="stat-box glass">
                 <strong>2 Pickle Bombs</strong>
-                <span>
-                  Every combo also includes 2 pickle bombs built into the order.
-                </span>
+                <span>Every combo includes 2 pickle bombs built into the order.</span>
               </div>
+
               <div class="stat-box glass">
                 <strong>Default Sauce</strong>
-                <span>
-                  Crank Sauce comes standard unless the guest switches it out.
-                </span>
+                <span>Crank Sauce comes standard unless the guest switches it out.</span>
               </div>
+
               <div class="stat-box glass">
                 <strong>Brand Ready</strong>
-                <span>
-                  Ready for pricing, online ordering, food photos, and your real logo.
-                </span>
+                <span>Ready for pricing, online ordering, food photos, and launch hype.</span>
               </div>
             </div>
           </div>
@@ -1582,29 +346,44 @@
         <div class="about-grid">
           <div class="about-panel diamond-plate reveal">
             <div class="section-kicker">Brand Mood</div>
-            <h2 class="section-title">Cluck N Crank Feels Built, Not Decorated</h2>
+            <h2 class="section-title">Built, Not Decorated</h2>
             <p>
-              The direction here leans into fabricated metal, fryer heat,
-              heavy crunch energy, and premium polish. It should feel like the
-              brand was forged in a performance garage instead of dropped into
-              a generic restaurant template.
+              Cluck N Crank leans into fabricated metal, fryer heat, heavy crunch
+              energy, and premium polish. It should feel like the brand was forged
+              in a performance garage instead of dropped into a generic restaurant
+              template.
             </p>
             <p>
-              That means layered surfaces, industrial edges, polished glow,
-              real fire motion, strong typography, and enough glass to keep the
-              whole thing sharp and premium.
+              That means layered surfaces, industrial edges, polished glow, real
+              fire motion, strong typography, and enough glass to keep the whole
+              thing sharp.
             </p>
           </div>
 
           <div class="about-panel glass reveal">
-            <div class="section-kicker">What To Add Next</div>
-            <h2 class="section-title">Easy Upgrades</h2>
+            <div class="section-kicker">Next Up</div>
+            <h2 class="section-title">Launch Upgrades</h2>
+
             <div class="about-list">
-              <div class="about-pill"><span class="dot"></span>Replace the CNC badge with your final Cluck N Crank logo.</div>
-              <div class="about-pill"><span class="dot"></span>Add real food photos for tenders, sandwich, fries, and pickle bombs.</div>
-              <div class="about-pill"><span class="dot"></span>Add prices beside each combo once your menu is finalized.</div>
-              <div class="about-pill"><span class="dot"></span>Connect the CTA to online ordering, email capture, or a launch list.</div>
-              <div class="about-pill"><span class="dot"></span>Add sauce artwork for Crank Sauce, Screamn Pickle, and Smoken Sauce.</div>
+              <div class="about-pill">
+                <span class="dot"></span>
+                Add real food photos for tenders, sandwich, fries, and pickle bombs.
+              </div>
+
+              <div class="about-pill">
+                <span class="dot"></span>
+                Add prices beside each combo once your launch menu is finalized.
+              </div>
+
+              <div class="about-pill">
+                <span class="dot"></span>
+                Connect the order button to Toast, DoorDash, or a launch list.
+              </div>
+
+              <div class="about-pill">
+                <span class="dot"></span>
+                Add final sauce artwork for Crank Sauce, Screamn Pickle, and Smoken Sauce.
+              </div>
             </div>
           </div>
         </div>
@@ -1619,10 +398,9 @@
               <div class="section-kicker">Ready To Launch</div>
               <h2>Turn The Heat On.</h2>
               <p>
-                This is now a functional Cluck N Crank landing page with real
-                combo names, sauces, included sides, stronger brand language,
-                and animated fire. Next step is plugging in your real logo,
-                pricing, ordering link, and food photography.
+                This landing page is ready for the Cluck N Crank launch push.
+                Next step is plugging in pricing, ordering links, real product
+                photos, and final sauce graphics.
               </p>
             </div>
 
@@ -1641,7 +419,7 @@
         <div class="footer-copy">
           <strong>Cluck N Crank</strong><br />
           Industrial chicken energy with real fire, loaded combos, and a premium glass finish.
-          Built for bold branding, launch hype, and fast edits on GitHub Pages.
+          Built for bold branding, launch hype, and fast edits.
         </div>
 
         <div class="footer-links">
@@ -1653,22 +431,6 @@
     </div>
   </footer>
 
-  <script>
-    const revealItems = document.querySelectorAll('.reveal');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.15
-    });
-
-    revealItems.forEach((item) => observer.observe(item));
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
-
